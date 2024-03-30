@@ -31,7 +31,7 @@ export const AddTransaction = () => {
   };
 
   return (
-    <form className="flex flex-col gap-4 text-black" onSubmit={handleSubmit}>
+    <form className="flex flex-col gap-4 " onSubmit={handleSubmit}>
       <input
         type="text"
         value={type}

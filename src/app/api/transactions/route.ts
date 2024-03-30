@@ -56,3 +56,21 @@ export async function POST(req: NextRequest) {
     },
   });
 }
+
+export async function DELETE(request: NextRequest) {
+  const { searchParams } = new URL(request.url)
+  const id = searchParams.get('id')
+  console.log(id)
+  if (!id) {
+    return new Response(JSON.stringify({ error: 'Transaction ID is required' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
+  await prisma.transaction.delete({
+    where: { id: parseInt(id) },
+  });
+
+  return new Response(null, { status: 204 }); // No Content
+}
