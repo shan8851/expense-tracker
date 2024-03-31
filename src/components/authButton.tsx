@@ -6,25 +6,22 @@ export function AuthButton() {
 
   if (session) {
     return (
-      <div className="flex items-center gap-2">
-        {session?.user?.name} <br />
-        <button
-          onClick={() => signOut()}
-          type="button"
-          className="rounded bg-black px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-700"
-        >
-          Sign Out
-        </button>
-      </div>
+      <button
+        onClick={() => signOut()}
+        type="button"
+        className="rounded bg-gray-50 px-2 py-1 text-xs font-semibold text-black shadow-sm hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-300"
+      >
+        Sign Out
+      </button>
     );
   }
   return (
     <button
-          onClick={() => signIn()}
-          type="button"
-          className="rounded bg-black px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-700"
-        >
-          Sign In
-        </button>
+      onClick={() => signIn()}
+      type="button"
+      className="rounded bg-gray-50 px-2 py-1 text-xs font-semibold text-black shadow-sm hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-300"
+    >
+      Sign In
+    </button>
   );
 }

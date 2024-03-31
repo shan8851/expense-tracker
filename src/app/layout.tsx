@@ -4,6 +4,8 @@ import './globals.css';
 import { getServerSession } from 'next-auth';
 import SessionProvider from '../components/SessionProvider';
 import { AUTH_OPTIONS } from './api/auth/[...nextauth]/options';
+import { Nav } from '@/components/nav';
+import { Footer } from '@/components/footer';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -18,11 +20,13 @@ export default async function RootLayout({
   const session = await getServerSession(AUTH_OPTIONS);
   return (
     <html lang="en">
-      <body>
+      <body className="flex flex-col min-h-screen">
         <SessionProvider session={session}>
-          <main className="p-4">
+          <main className="flex-1">
+            <Nav />
             {children}
           </main>
+          <Footer />
         </SessionProvider>
       </body>
     </html>

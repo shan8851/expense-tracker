@@ -11,25 +11,22 @@ export default async function DashboardPage() {
   }
   return (
     <div className="flex flex-col space-y-4">
-      <div className="flex items-center justify-between">
-        <h1 className="text-5xl font-extrabold">Dashboard</h1>
-        <AuthButton />
-      </div>
+      <h1 className="text-5xl font-extrabold">Dashboard</h1>
       {session.user.name && (
         <div className="flex items-center space-x-2">
           {session.user.image && (
             <Image
             src={session.user.image}
             alt={session.user.name}
-            className="w-8 h-8 rounded-full"
+            className="w-10 h-10 rounded-full border border-gray-900"
             width={100}
             height={100}
           />
           )}
-          <p>
+          <div className="flex items-center gap-2">
             <span className="font-bold underline">{session.user.name}</span>
-            let&apos;s get building!
-          </p>
+             <p>- welcome to HustleHub - let&apos;s get building!</p>
+          </div>
         </div>
       )}
     </div>
