@@ -3,9 +3,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { getServerSession } from 'next-auth';
 import SessionProvider from '../components/SessionProvider';
-import NavMenu from '../components/NavMenu';
 import { AUTH_OPTIONS } from './api/auth/[...nextauth]/options';
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -20,10 +18,9 @@ export default async function RootLayout({
   const session = await getServerSession(AUTH_OPTIONS);
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body>
         <SessionProvider session={session}>
-          <main className="mx-auto max-w-5xl text-2xl flex gap-8">
-            <NavMenu />
+          <main className="p-4">
             {children}
           </main>
         </SessionProvider>
