@@ -1,4 +1,5 @@
 import { Project } from "@prisma/client";
+import NewProjectShell from "./newProjectShell";
 
 type ProjectListProps = {
   projects: Project[];
@@ -10,7 +11,7 @@ export const ProjectList = ({ projects }: ProjectListProps) => {
       <h1 className="text-3xl font-extrabold">Projects</h1>
       <div className="flex flex-col gap-1">
         {projects.length === 0 && (
-          <h2 className="text-lg">No projects found</h2>
+          <NewProjectShell />
         )}
         {projects.length > 0 && projects.map((project) => (
         <div key={project.id}>{project.name}</div>
