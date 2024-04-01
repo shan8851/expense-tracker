@@ -33,7 +33,7 @@ export function Plans() {
             Plans for everyone.
           </h2>
           <p className="mt-6 text-lg leading-8 text-gray-600">
-            From solo founders to small teams, we fot you covered.
+            From solo founders to small teams, we got you covered.
           </p>
         </div>
         <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">

@@ -5,10 +5,10 @@ import Pricing from '@/components/pricing';
 
 export default async function Home() {
   return (
-    <div className="container mx-auto flex flex-col space-y-4 max-w-6xl">
+    <div className="mx-auto flex flex-col space-y-4">
       <Hero />
-      <Plans />
       <Pricing />
+      <Plans />
     </div>
   );
 }

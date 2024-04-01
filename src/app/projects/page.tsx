@@ -26,7 +26,7 @@ async function getUserProjects(userId?:string) {
   return projects;
 }
 
-export default async function DashboardPage() {
+export default async function ProjectsPage() {
   const session = await getServerSession(AUTH_OPTIONS);
   const projects = await getUserProjects(session?.user?.id);
   if (!session || !session.user) {
