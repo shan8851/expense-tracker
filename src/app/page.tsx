@@ -1,7 +1,7 @@
-import { AuthButton } from '@/components/authButton';
-import Hero from '@/components/hero';
-import { Plans } from '@/components/plans';
-import Pricing from '@/components/pricing';
+import { AuthButton } from '@/components/auth/authButton';
+import Hero from '@/components/shell/hero';
+import { Plans } from '@/components/shell/plans';
+import Pricing from '@/components/shell/pricing';
 
 export default async function Home() {
   return (

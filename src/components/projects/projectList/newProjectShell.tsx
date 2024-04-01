@@ -1,7 +1,5 @@
-'use client';
+
 import { PlusIcon } from '@heroicons/react/20/solid';
-import { useState } from 'react';
-import AddProjectModal from './addProjectModal';
 
 type NewProjectShellProps = {
   setOpen: (open: boolean) => void;

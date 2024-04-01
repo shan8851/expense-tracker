@@ -2,9 +2,9 @@ import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { AUTH_OPTIONS } from '../api/auth/[...nextauth]/options';
 import Image from 'next/image';
-import { AuthButton } from '@/components/authButton';
+import { AuthButton } from '@/components/auth/authButton';
 import { db } from '@/lib/db';
-import { ProjectList } from '@/components/projectList';
+import { ProjectList } from '@/components/projects/projectList/projectList';
 
 async function getUserProjects(userId?:string) {
   if (!userId) {
@@ -32,7 +32,6 @@ export default async function ProjectsPage() {
   if (!session || !session.user) {
     redirect('/api/auth/signin');
   }
-  console.debug('projects', projects);
   return (
     <div className="flex flex-col space-y-4">
       <ProjectList projects={projects} />

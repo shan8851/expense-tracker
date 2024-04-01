@@ -1,14 +1,6 @@
 import { Project } from '@prisma/client';
+import Link from 'next/link';
 
-const people = [
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member',
-  },
-  // More people...
-];
 
 type ProjectsTableProps = {
   projects: Project[];
@@ -83,7 +75,7 @@ export default function ProjectsTable({
                   {projects.map((project) => (
                     <tr key={project.id}>
                       <td className="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 break-words">
-                        {project.name}
+                        <Link href={`projects/${project.id}`}>{project.name}</Link>
                       </td>
                       <td className="px-3 py-4 text-sm text-gray-500 break-words">
                         {project.description ?? '---'}

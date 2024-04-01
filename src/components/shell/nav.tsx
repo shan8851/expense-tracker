@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { AuthButton } from './authButton';
+import { AuthButton } from '../auth/authButton';
 
 export function Nav() {
   return (

@@ -2,10 +2,12 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { getServerSession } from 'next-auth';
-import SessionProvider from '../components/SessionProvider';
+import SessionProvider from '../components/providers/SessionProvider';
 import { AUTH_OPTIONS } from './api/auth/[...nextauth]/options';
-import { Nav } from '@/components/nav';
-import { Footer } from '@/components/footer';
+import { Nav } from '@/components/shell/nav';
+import { Footer } from '@/components/shell/footer';
+
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -20,7 +22,7 @@ export default async function RootLayout({
   const session = await getServerSession(AUTH_OPTIONS);
   return (
     <html lang="en">
-      <body className="flex flex-col min-h-screen">
+      <body className={`flex flex-col min-h-screen ${inter.className}`}>
         <SessionProvider session={session}>
           <main className="flex-1">
             <Nav />
