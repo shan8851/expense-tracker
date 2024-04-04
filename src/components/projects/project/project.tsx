@@ -1,6 +1,7 @@
 import { Project } from '@prisma/client';
 import { Income } from './projectIncome';
 import { db } from '@/lib/db';
+import { Expense } from './projectExpense';
 
 type ProjectProps = {
   project: Project;
@@ -36,10 +37,42 @@ async function getIncomeTotalForProject(projectId:string) {
 
 }
 
+async function getExpensesForProject(projectId:string) {
+  try {
+    const incomes = await db.expense.findMany({
+      where: {
+        projectId: projectId,
+      },
+    });
+    return incomes;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function getExpensesTotalForProject(projectId:string) {
+  try {
+    const totalExpenses = await db.expense.aggregate({
+      where: {
+        projectId: projectId,
+      },
+      _sum: {
+        amount: true,
+      },
+    });
+    return totalExpenses._sum.amount;
+  } catch (error) {
+    throw error;
+  }
+
+}
+
 
 export async function Project({ project }: ProjectProps) {
   const incomeRecords = await getIncomeForProject(project.id);
   const incomeTotal = await getIncomeTotalForProject(project.id) || 0;
+  const expenseRecords = await getExpensesForProject(project.id);
+  const expenseTotal = await getExpensesTotalForProject(project.id) || 0;
   return (
     <div className="flex flex-col gap-8 max-w-4xl mx-auto">
       <div>
@@ -89,6 +122,7 @@ export async function Project({ project }: ProjectProps) {
       </div>
     </div>
     <Income projectName={project.name} incomeRecords={incomeRecords} incomeTotal={incomeTotal} />
+    <Expense projectName={project.name} expenseRecords={expenseRecords} expenseTotal={expenseTotal} />
     </div>
   );
 }

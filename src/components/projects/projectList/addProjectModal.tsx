@@ -62,7 +62,7 @@ export default function AddProjectModal({
                     <form action={createProjectAction} className="flex flex-col gap-4">
                       <div>
                         <label
-                          htmlFor="email"
+                          htmlFor="name"
                           className="block text-sm font-medium leading-6 text-gray-900 text-left"
                         >
                           Name
