@@ -52,7 +52,6 @@ model User {
   accounts      Account[]
   sessions      Session[]
   projects      Project[]
-  collaborations  Collaborator[]
 }
 
 model Project {
@@ -65,7 +64,6 @@ model Project {
   expenses    Expense[]
   timeLogs    TimeLog[]
   incomes     ProjectIncome[]
-  collaborators Collaborator[]
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -102,16 +100,4 @@ model ProjectIncome {
   description String?
 
   project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
-}
-
-model Collaborator {
-  id        String   @id @default(cuid())
-  projectId String
-  userId    String   // The collaborator's User ID
-  role      String   // Role of the collaborator in the project, e.g., "Developer", "Designer"
-
-  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([projectId, userId])
 }

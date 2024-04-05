@@ -2,7 +2,7 @@
 import { Project } from "@prisma/client";
 import NewProjectShell from "./newProjectShell";
 import { useState } from "react";
-import AddProjectModal from "./addProjectModal";
+import AddProjectModal from "../../modals/addProjectModal";
 import ProjectsTable from "../../tables/projectsTable";
 import toast from "react-hot-toast";
 
