@@ -1,18 +1,18 @@
 import { Fragment, useRef } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { PlusCircleIcon } from '@heroicons/react/20/solid';
-import { createProjectIncomeAction } from '@/actions/createProjectIncomeAction';
+import { logProjectTimeAction } from '@/actions/logProjectTimeAction';
 
-type AddProjectIncomeModalProps = {
+type LogProjectTimeModalProps = {
   open: boolean;
   setOpen: (open: boolean) => void;
   projectId: string;
 };
-export default function AddProjectIncomeModal({
+export default function LogProjectTimeModal({
   open,
   setOpen,
   projectId,
-}: AddProjectIncomeModalProps) {
+}: LogProjectTimeModalProps) {
   const cancelButtonRef = useRef(null);
 
   return (
@@ -59,73 +59,27 @@ export default function AddProjectIncomeModal({
                       as="h3"
                       className="text-base font-semibold leading-6 text-gray-900"
                     >
-                      Add project income
+                      Log project time
                     </Dialog.Title>
                     <form
-                      action={createProjectIncomeAction}
+                      action={logProjectTimeAction}
                       className="flex flex-col gap-4"
                     >
                       <input type="hidden" name="projectId" value={projectId} />
                       <div>
                         <label
-                          htmlFor="price"
-                          className="block text-sm font-medium leading-6 text-gray-900 text-left"
+                          htmlFor="hours"
+                          className="block text-sm font-medium leading-6 text-gray-900"
                         >
-                          Amount
-                        </label>
-                        <div className="relative mt-2 rounded-md shadow-sm">
-                          <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                            <span className="text-gray-500 sm:text-sm">$</span>
-                          </div>
-                          <input
-                            type="text"
-                            name="amount"
-                            id="amount"
-                            className="block w-full rounded-md border-0 py-1.5 pl-7 pr-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            placeholder="0.00"
-                            aria-describedby="price-currency"
-                          />
-                          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-                            <span
-                              className="text-gray-500 sm:text-sm"
-                              id="price-currency"
-                            >
-                              USD
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                      <div>
-                        <label
-                          htmlFor="source"
-                          className="block text-sm font-medium leading-6 text-gray-900 text-left"
-                        >
-                          Source
+                          No. of Hours
                         </label>
                         <div className="mt-2">
                           <input
-                            type="text"
-                            name="source"
-                            id="source"
-                            className="px-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            placeholder="Subscription"
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <label
-                          htmlFor="description"
-                          className="block text-sm font-medium leading-6 text-gray-900 text-left"
-                        >
-                          Description
-                        </label>
-                        <div className="mt-2">
-                          <textarea
-                            rows={4}
-                            name="description"
-                            id="description"
-                            className="px-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            defaultValue={''}
+                            type="number"
+                            name="hours"
+                            id="hours"
+                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            placeholder="3"
                           />
                         </div>
                       </div>
@@ -145,12 +99,30 @@ export default function AddProjectIncomeModal({
                           />
                         </div>
                       </div>
+                      <div>
+                        <label
+                          htmlFor="note"
+                          className="block text-sm font-medium leading-6 text-gray-900 text-left"
+                        >
+                          Description
+                        </label>
+                        <div className="mt-2">
+                          <textarea
+                            rows={4}
+                            name="note"
+                            id="note"
+                            className="px-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            defaultValue={''}
+                          />
+                        </div>
+                      </div>
+
                       <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
                         <button
                           type="submit"
                           className="inline-flex w-full justify-center rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-700 sm:col-start-2"
                         >
-                          Add Income
+                          Log time
                         </button>
                         <button
                           type="button"

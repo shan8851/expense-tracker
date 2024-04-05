@@ -6,8 +6,9 @@ import SessionProvider from '../components/providers/SessionProvider';
 import { AUTH_OPTIONS } from './api/auth/[...nextauth]/options';
 import { Nav } from '@/components/shell/nav';
 import { Footer } from '@/components/shell/footer';
+import ToastProvider from '@/components/providers/ToastProvider';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -24,10 +25,12 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`flex flex-col min-h-screen ${inter.className}`}>
         <SessionProvider session={session}>
-          <main className="flex-1">
-            <Nav />
-            {children}
-          </main>
+          <ToastProvider>
+            <main className="flex-1">
+              <Nav />
+              {children}
+            </main>
+          </ToastProvider>
           <Footer />
         </SessionProvider>
       </body>

@@ -1,34 +1,31 @@
 'use client';
-import { ProjectIncome } from '@prisma/client';
+import { TimeLog } from '@prisma/client';
 import { useState } from 'react';
-import AddProjectIncomeModal from './addProjectIncomeModal';
-import { IncomeTable } from './incomeTable';
+import { TimeLogTable } from './timeTable';
+import LogProjectTimeModal from './logProjectTimeModal';
 
-type IncomeProps = {
-  incomeRecords: ProjectIncome[];
+type TimeLogProps = {
+  timeRecords: TimeLog[];
   projectName: string;
-  incomeTotal: number;
   projectId: string;
 };
 
-export const Income = ({
-  incomeRecords,
+export const ProjectTimeLog = ({
+  timeRecords,
   projectName,
-  incomeTotal,
   projectId,
-}: IncomeProps) => {
+}: TimeLogProps) => {
   const [open, setOpen] = useState(false);
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-1">
-        <IncomeTable
-          incomeRecords={incomeRecords}
+        <TimeLogTable
+          timeRecords={timeRecords}
           projectName={projectName}
           setOpen={setOpen}
-          incomeTotal={incomeTotal}
         />
       </div>
-      <AddProjectIncomeModal
+      <LogProjectTimeModal
         open={open}
         setOpen={setOpen}
         projectId={projectId}

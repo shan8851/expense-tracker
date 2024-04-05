@@ -1,4 +1,3 @@
-import { AuthButton } from '@/components/auth/authButton';
 import Hero from '@/components/shell/hero';
 import { Plans } from '@/components/shell/plans';
 import Pricing from '@/components/shell/pricing';
