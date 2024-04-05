@@ -1,8 +1,8 @@
 'use client';
 import { Expense as ProjectExpense } from '@prisma/client';
 import { useState } from 'react';
-import AddProjectExpenseModal from './addProjectExpenseModal';
-import { ExpenseTable } from './expenseTable';
+import AddProjectExpenseModal from '../../modals/addProjectExpenseModal';
+import { ExpenseTable } from '../../tables/expenseTable';
 
 type ExpenseProps = {
   expenseRecords: ProjectExpense[];

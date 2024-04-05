@@ -8,7 +8,9 @@ import { revalidatePath } from "next/cache";
 export const createProjectExpenseAction = async (formData: FormData) => {
   const session = await getServerSession(AUTH_OPTIONS);
   try {
-    if (!session || !session.user) return "Unauthorized";
+    if (!session || !session.user) return {
+      error: "You must be signed in to create a project expense."
+    };
     const amount = formData.get("amount") as string;
     const category = formData.get("category") as string;
     const description = formData.get("description") as string;
@@ -27,7 +29,10 @@ export const createProjectExpenseAction = async (formData: FormData) => {
       },
     });
     revalidatePath("/dashboard");
+    return { error: null };
   } catch (error:any) {
-    throw new Error(error.message);
+    return {
+      error: error.message ?? 'An error occurred while creating project expense.'
+    };
   }
 };

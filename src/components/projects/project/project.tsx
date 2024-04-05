@@ -1,4 +1,4 @@
-import { Project } from '@prisma/client';
+import { Project as ProjectType } from '@prisma/client';
 import { Income } from './projectIncome';
 import { db } from '@/lib/db';
 import { Expense } from './projectExpense';
@@ -6,7 +6,7 @@ import { ProjectTimeLog } from './projectTimeLog';
 import { ProjectStats } from './projectStats';
 
 type ProjectProps = {
-  project: Project;
+  project: ProjectType;
 };
 
 async function getIncomeForProject(projectId: string) {
@@ -98,14 +98,30 @@ export async function Project({ project }: ProjectProps) {
     totalHoursWorked > 0 ? profitLoss / totalHoursWorked : 0;
   return (
     <div className="flex flex-col gap-8 max-w-4xl mx-auto">
-      <div className="px-4 sm:px-0">
-        <h3 className="text-base font-semibold leading-7 text-gray-900">
-          Project Details
-        </h3>
-        <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-          ID: {project.id}
-        </p>
+      <div className="px-4 sm:px-0 flex flex-col gap-2">
+        <div className="flex gap-4 items-center justify-between">
+          <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
+            id: {project.id}
+          </p>
+          <div className="flex gap-2">
+            <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
+              created: {new Date(project.createdAt).toLocaleDateString()}
+            </p>
+            <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
+              updated: {new Date(project.updatedAt).toLocaleDateString()}
+            </p>
+          </div>
+        </div>
+        <h3 className="font-semibold text-gray-900 text-5xl">{project.name}</h3>
       </div>
+      <ProjectStats
+        totalIncome={incomeTotal}
+        totalExpenses={expenseTotal}
+        hoursWorked={totalHoursWorked}
+        profit={profitLoss}
+        hourlyRate={dollarsPerHour}
+      />
+      <h4 className="text-gray-900 text-lg font-semibold">Details</h4>
       <div className="border-t border-gray-100">
         <dl className="divide-y divide-gray-100">
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -124,32 +140,8 @@ export async function Project({ project }: ProjectProps) {
               {project.description}
             </dd>
           </div>
-          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt className="text-sm font-medium leading-6 text-gray-900">
-              Created
-            </dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-              {new Date(project.createdAt).toLocaleDateString()}
-            </dd>
-          </div>
-          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt className="text-sm font-medium leading-6 text-gray-900">
-              Updated
-            </dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-              {new Date(project.updatedAt).toLocaleDateString()}
-            </dd>
-          </div>
         </dl>
       </div>
-      <ProjectStats
-        projectName={project.name}
-        totalIncome={incomeTotal}
-        totalExpenses={expenseTotal}
-        hoursWorked={totalHoursWorked}
-        profit={profitLoss}
-        hourlyRate={dollarsPerHour}
-      />
       <Income
         projectName={project.name}
         incomeRecords={incomeRecords}

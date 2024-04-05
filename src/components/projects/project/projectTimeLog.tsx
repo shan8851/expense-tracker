@@ -1,8 +1,8 @@
 'use client';
 import { TimeLog } from '@prisma/client';
 import { useState } from 'react';
-import { TimeLogTable } from './timeTable';
-import LogProjectTimeModal from './logProjectTimeModal';
+import { TimeLogTable } from '../../tables/timeTable';
+import LogProjectTimeModal from '../../modals/logProjectTimeModal';
 
 type TimeLogProps = {
   timeRecords: TimeLog[];

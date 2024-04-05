@@ -8,7 +8,9 @@ import { revalidatePath } from "next/cache";
 export const logProjectTimeAction = async (formData: FormData) => {
   const session = await getServerSession(AUTH_OPTIONS);
   try {
-    if (!session || !session.user) return "Unauthorized";
+    if (!session || !session.user) return {
+      error: "You must be signed in to log time."
+    };
     const hours = formData.get("hours") as string;
     const note = formData.get("note") as string;
     const date = formData.get("date") as string;
@@ -25,7 +27,10 @@ export const logProjectTimeAction = async (formData: FormData) => {
       },
     });
     revalidatePath("/dashboard");
+    return { error: null };
   } catch (error:any) {
-    throw new Error(error.message);
+    return {
+      error: error.message ?? 'An error occurred while logging time.'
+    };
   }
 };

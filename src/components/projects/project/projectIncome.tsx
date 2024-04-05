@@ -1,8 +1,8 @@
 'use client';
 import { ProjectIncome } from '@prisma/client';
 import { useState } from 'react';
-import AddProjectIncomeModal from './addProjectIncomeModal';
-import { IncomeTable } from './incomeTable';
+import AddProjectIncomeModal from '../../modals/addProjectIncomeModal';
+import { IncomeTable } from '../../tables/incomeTable';
 
 type IncomeProps = {
   incomeRecords: ProjectIncome[];

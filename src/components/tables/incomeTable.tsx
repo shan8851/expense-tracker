@@ -1,3 +1,5 @@
+import { currencyFormatter } from '@/utils/utils';
+import { PencilSquareIcon, TrashIcon } from '@heroicons/react/20/solid';
 import { ProjectIncome } from '@prisma/client';
 
 type ProjectIncomeTableProps = {
@@ -51,15 +53,27 @@ export function IncomeTable({
               </th>
               <th
                 scope="col"
-                className="hidden px-3 py-3.5 text-right text-sm font-semibold text-gray-900 sm:table-cell"
+                className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell"
               >
                 Date
               </th>
               <th
                 scope="col"
-                className="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0"
+                className="py-3.5 pl-3 pr-4 text-left text-sm font-semibold text-gray-900 sm:pr-0"
               >
                 Price
+              </th>
+              <th
+                scope="col"
+                className="py-3.5 pl-3 pr-4 text-left text-sm font-semibold text-gray-900 sm:pr-0"
+              >
+
+              </th>
+              <th
+                scope="col"
+                className="py-3.5 pl-3 pr-4 text-left text-sm font-semibold text-gray-900 sm:pr-0"
+              >
+
               </th>
             </tr>
           </thead>
@@ -84,11 +98,17 @@ export function IncomeTable({
                       {record.description}
                     </div>
                   </td>
-                  <td className="hidden px-3 py-5 text-right text-sm text-gray-500 sm:table-cell">
+                  <td className="hidden px-3 py-5 text-left text-sm text-gray-500 sm:table-cell">
                     {new Date(record.date).toLocaleDateString()}
                   </td>
-                  <td className="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0">
-                    {record.amount}
+                  <td className="py-5 pl-3 pr-4 text-left text-sm text-gray-500 sm:pr-0">
+                    {currencyFormatter.format(record.amount)}
+                  </td>
+                  <td>
+                    <PencilSquareIcon className="h-3 w-3 text-black" />
+                  </td>
+                  <td>
+                    <TrashIcon className="h-3 w-3 text-red" />
                   </td>
                 </tr>
               ))
@@ -110,7 +130,7 @@ export function IncomeTable({
                 Total
               </th>
               <td className="pl-3 pr-4 pt-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">
-                ${incomeTotal.toFixed(2)}
+                {currencyFormatter.format(incomeTotal)}
               </td>
             </tr>
           </tfoot>
