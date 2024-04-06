@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { ConfirmDeleteModal } from '../modals/confirmDeleteModal';
 import { TrashIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
-import { deleteIncomeAction } from '@/actions/deleteIncomAction';
 import toast from 'react-hot-toast';
 
 type EditAndDeleteCellProps = {
@@ -22,7 +21,7 @@ export function EditAndDeleteCell({ id, deleteAction }: EditAndDeleteCellProps) 
     await deleteAction(id);
     setIsLoading(false);
     setDeleteModalOpen(false);
-    toast.success('Income deleted successfully');
+    toast.success('Item deleted successfully');
   }
 
   console.debug(deleteModalOpen)

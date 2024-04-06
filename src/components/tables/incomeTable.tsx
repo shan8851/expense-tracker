@@ -1,8 +1,7 @@
 import { currencyFormatter } from '@/utils/utils';
-import { TrashIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
 import { ProjectIncome } from '@prisma/client';
 import { EditAndDeleteCell } from './editAndDeleteCell';
-import { deleteIncomeAction } from '@/actions/deleteIncomAction';
+import { deleteIncomeAction } from '@/actions/deleteIncomeAction';
 
 type ProjectIncomeTableProps = {
   setOpen: (open: boolean) => void;
@@ -63,14 +62,12 @@ export function IncomeTable({
                 scope="col"
                 className="py-3.5 pl-3 pr-4 text-left text-sm font-semibold text-gray-900 sm:pr-0"
               >
-                Price
+                Amount
               </th>
               <th
                 scope="col"
                 className="py-3.5 pl-3 pr-4 text-left text-sm font-semibold text-gray-900 sm:pr-0"
-              >
-
-              </th>
+              />
             </tr>
           </thead>
           <tbody>
@@ -111,7 +108,7 @@ export function IncomeTable({
             <tr>
               <th
                 scope="row"
-                colSpan={2}
+                colSpan={3}
                 className="hidden pl-4 pr-3 pt-4 text-right text-sm font-semibold text-gray-900 sm:table-cell sm:pl-0"
               >
                 Total

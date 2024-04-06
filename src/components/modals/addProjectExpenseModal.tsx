@@ -1,7 +1,6 @@
 import { Fragment, useRef } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { PlusCircleIcon } from '@heroicons/react/20/solid';
-import { createProjectExpenseAction } from '@/actions/createProjectExpenseAction';
 import { ExpenseForm } from '@/components/forms/expenseForm';
 
 type AddProjectExpenseModalProps = {

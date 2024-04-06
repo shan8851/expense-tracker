@@ -1,4 +1,7 @@
+import { currencyFormatter } from '@/utils/utils';
 import { Expense } from '@prisma/client';
+import { EditAndDeleteCell } from './editAndDeleteCell';
+import { deleteExpenseAction } from '@/actions/deleteExpenseAction';
 
 type ProjectExpenseTableProps = {
   setOpen: (open: boolean) => void;
@@ -51,16 +54,20 @@ export function ExpenseTable({
               </th>
               <th
                 scope="col"
-                className="hidden px-3 py-3.5 text-right text-sm font-semibold text-gray-900 sm:table-cell"
+                className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell"
               >
                 Date
               </th>
               <th
                 scope="col"
-                className="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0"
+                className="py-3.5 pl-3 pr-4 text-left text-sm font-semibold text-gray-900 sm:pr-0"
               >
-                Price
+                Amount
               </th>
+              <th
+                scope="col"
+                className="py-3.5 pl-3 pr-4 text-left text-sm font-semibold text-gray-900 sm:pr-0"
+              />
             </tr>
           </thead>
           <tbody>
@@ -84,11 +91,14 @@ export function ExpenseTable({
                       {record.description}
                     </div>
                   </td>
-                  <td className="hidden px-3 py-5 text-right text-sm text-gray-500 sm:table-cell">
+                  <td className="hidden px-3 py-5 text-left text-sm text-gray-500 sm:table-cell">
                     {new Date(record.date).toLocaleDateString()}
                   </td>
-                  <td className="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0">
-                    {record.amount}
+                  <td className="py-5 pl-3 pr-4 text-left text-sm text-gray-500 sm:pr-0">
+                    {currencyFormatter.format(record.amount)}
+                  </td>
+                  <td className="py-5 pl-3 pr-4">
+                    <EditAndDeleteCell deleteAction={deleteExpenseAction} id={record.id} />
                   </td>
                 </tr>
               ))
@@ -98,7 +108,7 @@ export function ExpenseTable({
             <tr>
               <th
                 scope="row"
-                colSpan={2}
+                colSpan={3}
                 className="hidden pl-4 pr-3 pt-4 text-right text-sm font-semibold text-gray-900 sm:table-cell sm:pl-0"
               >
                 Total

@@ -1,4 +1,6 @@
 import { TimeLog } from '@prisma/client';
+import { EditAndDeleteCell } from './editAndDeleteCell';
+import { deleteTimeAction } from '@/actions/deleteTimeAction';
 
 type ProjectIncomeTableProps = {
   setOpen: (open: boolean) => void;
@@ -60,10 +62,8 @@ export function TimeLogTable({
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{record.hours}</td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{record.note}</td>
-                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                      <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                        Edit<span className="sr-only">, {record.hours}</span>
-                      </a>
+                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 flex justify-end">
+                      <EditAndDeleteCell id={record.id} deleteAction={deleteTimeAction} />
                     </td>
                   </tr>
                 ))}
