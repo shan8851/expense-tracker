@@ -11,7 +11,9 @@ export default function ToastProvider({ children }: ToastProviderProps) {
   return (
     <>
       {children}
-      <Toaster />
+      <Toaster
+        position="bottom-right"
+      />
     </>
   );
 }

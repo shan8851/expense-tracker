@@ -27,7 +27,7 @@ export function ExpenseForm({ projectId, setOpen }: ExpenseFormProps) {
     if (error) {
       toast.error(error);
     } else {
-      toast.success('Income added successfully');
+      toast.success('Expense added successfully');
     }
     setOpen(false);
   };

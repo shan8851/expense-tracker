@@ -8,7 +8,9 @@ import { revalidatePath } from "next/cache";
 export const createProjectAction = async (formData: FormData) => {
   const session = await getServerSession(AUTH_OPTIONS);
   try {
-    if (!session || !session.user) return "Unauthorized";
+    if (!session || !session.user) return {
+      error: "You must be signed in to create a project."
+    };
     const name = formData.get("name") as string;
     const description = formData.get("description") as string;
     await db.project.create({
@@ -23,7 +25,10 @@ export const createProjectAction = async (formData: FormData) => {
       },
     });
     revalidatePath("/dashboard");
+    return { error: null };
   } catch (error:any) {
-    throw new Error(error.message);
+    return {
+      error: error.message ?? 'An error occurred while creating project.'
+    };
   }
 };

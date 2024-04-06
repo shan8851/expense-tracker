@@ -1,5 +1,7 @@
 import { Project } from '@prisma/client';
 import Link from 'next/link';
+import { EditAndDeleteCell } from './editAndDeleteCell';
+import { deleteProjectAction } from '@/actions/deleteProjectAction';
 
 
 type ProjectsTableProps = {
@@ -86,10 +88,8 @@ export default function ProjectsTable({
                       <td className="hidden md:table-cell whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                         {new Date(project.updatedAt).toLocaleDateString()}
                       </td>
-                      <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                        <a href="#" className="text-black hover:underline">
-                          Edit
-                        </a>
+                      <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 flex gap-2 justify-end">
+                        <EditAndDeleteCell id={project.id} deleteAction={deleteProjectAction} />
                       </td>
                     </tr>
                   ))}

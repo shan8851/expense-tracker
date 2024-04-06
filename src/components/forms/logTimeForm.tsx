@@ -28,7 +28,7 @@ export function LogTimeForm({ projectId, setOpen }: LogTimeFormProps) {
     if (error) {
       toast.error(error);
     } else {
-      toast.success('Income added successfully');
+      toast.success('Time logged successfully');
     }
     setOpen(false);
   };
