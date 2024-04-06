@@ -1,7 +1,4 @@
-'use client';
 import { ProjectIncome } from '@prisma/client';
-import { useState } from 'react';
-import AddProjectIncomeModal from '../../modals/addProjectIncomeModal';
 import { IncomeTable } from '../../tables/incomeTable';
 
 type IncomeProps = {
@@ -17,22 +14,16 @@ export const Income = ({
   incomeTotal,
   projectId,
 }: IncomeProps) => {
-  const [open, setOpen] = useState(false);
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-1">
         <IncomeTable
           incomeRecords={incomeRecords}
           projectName={projectName}
-          setOpen={setOpen}
           incomeTotal={incomeTotal}
+          projectId={projectId}
         />
       </div>
-      <AddProjectIncomeModal
-        open={open}
-        setOpen={setOpen}
-        projectId={projectId}
-      />
     </div>
   );
 };

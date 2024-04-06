@@ -24,7 +24,6 @@ export function EditAndDeleteCell({ id, deleteAction }: EditAndDeleteCellProps) 
     toast.success('Item deleted successfully');
   }
 
-  console.debug(deleteModalOpen)
   return (
     <>
       <div className="flex gap-2">

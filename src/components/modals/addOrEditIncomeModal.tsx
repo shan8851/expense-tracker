@@ -1,20 +1,30 @@
 import { Fragment, useRef } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { PlusCircleIcon } from '@heroicons/react/20/solid';
-import { createProjectIncomeAction } from '@/actions/createProjectIncomeAction';
+import { PlusCircleIcon, PencilIcon } from '@heroicons/react/20/solid';
 import { IncomeForm } from '../forms/incomeForm';
+import { ProjectIncome } from '@prisma/client';
 
-type AddProjectIncomeModalProps = {
+type AddOrEditIncomeModalProps = {
   open: boolean;
   setOpen: (open: boolean) => void;
   projectId: string;
+  incomeRecord: ProjectIncome | null;
 };
-export default function AddProjectIncomeModal({
+export function AddOrEditIncomeModal({
   open,
   setOpen,
   projectId,
-}: AddProjectIncomeModalProps) {
+  incomeRecord,
+}: AddOrEditIncomeModalProps) {
   const cancelButtonRef = useRef(null);
+  const isEditing = incomeRecord !== null;
+  const title = isEditing ? 'Edit Project Income' : 'Add Project Income';
+  const iconBgColorClass = isEditing ? 'bg-blue-100' : 'bg-emerald-100';
+  const icon = !isEditing ? (
+    <PlusCircleIcon className="h-6 w-6 text-emerald-600" aria-hidden="true" />
+  ) : (
+    <PencilIcon className="h-6 w-6 text-blue-600" aria-hidden="true" />
+  );
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -49,20 +59,19 @@ export default function AddProjectIncomeModal({
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
                 <div>
-                  <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100">
-                    <PlusCircleIcon
-                      className="h-6 w-6 text-emerald-600"
-                      aria-hidden="true"
-                    />
+                  <div
+                    className={`mx-auto flex h-12 w-12 items-center justify-center rounded-full ${iconBgColorClass}`}
+                  >
+                    {icon}
                   </div>
                   <div className="mt-3 text-center sm:mt-5">
                     <Dialog.Title
                       as="h3"
                       className="text-base font-semibold leading-6 text-gray-900"
                     >
-                      Add project income
+                      {title}
                     </Dialog.Title>
-                    <IncomeForm projectId={projectId} setOpen={setOpen} />
+                    <IncomeForm projectId={projectId} setOpen={setOpen} incomeRecord={incomeRecord} />
                   </div>
                 </div>
               </Dialog.Panel>
