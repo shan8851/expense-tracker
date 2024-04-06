@@ -1,7 +1,6 @@
 import { Fragment, useRef } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { PlusCircleIcon } from '@heroicons/react/20/solid';
-import { createProjectAction } from '@/actions/createProjectAction';
 import { ProjectForm } from '../forms/projectForm';
 
 type AddProjectModalProps = {

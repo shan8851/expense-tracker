@@ -65,6 +65,9 @@ export function ProjectForm({ setOpen, projectId }: ProjectFormProps) {
             placeholder="HustleHub"
           />
         </div>
+        <div className="h-[20px]">
+          {errors.name && <p className="text-left text-sm text-red-600">{errors.name}</p>}
+        </div>
       </div>
       <div>
         <label
