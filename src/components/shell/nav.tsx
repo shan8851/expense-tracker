@@ -13,11 +13,18 @@ export async function Nav() {
       <div className="flex items-center gap-4">
         {session && session.user && (
           <div className="flex items-center gap-4">
+
             <Link
               href="/projects"
               className="text-white text-xs p-1 hover:bg-gray-600"
             >
               Projects
+            </Link>
+            <Link
+              href="/settings"
+              className="text-white text-xs p-1 hover:bg-gray-600"
+            >
+              Settings
             </Link>
           </div>
         )}

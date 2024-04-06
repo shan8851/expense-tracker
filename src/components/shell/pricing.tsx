@@ -87,28 +87,6 @@ export default function Pricing() {
   const [frequency, setFrequency] = useState(frequencies[0]);
   const session = useSession();
 
-  // const handleCreateCheckoutSessio = async (plan: Tier) => {
-  //   const productId = getPriceId(plan.id, frequency.value);
-  //   const res = await fetch(`/api/stripe/checkout-session`, {
-  //     method: 'POST',
-  //     body: JSON.stringify({productId}),
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //   });
-  //   const checkoutSession = await res.json().then((value) => {
-  //     return value.session;
-  //   });
-  //   const stripe = await getStripe();
-  //   const { error } = await stripe!.redirectToCheckout({
-  //     sessionId: checkoutSession.id,
-  //   });
-  //   // If `redirectToCheckout` fails due to a browser or network
-  //   // error, display the localized error message to your customer
-  //   // using `error.message`.
-  //   console.warn(error.message);
-  // };
-
   const handleCreateCheckoutSession = async (plan: Tier) => {
   // Assuming `getPriceId` correctly returns the Stripe price ID based on the plan and frequency
   const productId = getPriceId(plan.id, frequency.value);

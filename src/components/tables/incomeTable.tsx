@@ -1,6 +1,8 @@
 import { currencyFormatter } from '@/utils/utils';
-import { PencilSquareIcon, TrashIcon } from '@heroicons/react/20/solid';
+import { TrashIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
 import { ProjectIncome } from '@prisma/client';
+import { EditAndDeleteCell } from './editAndDeleteCell';
+import { deleteIncomeAction } from '@/actions/deleteIncomAction';
 
 type ProjectIncomeTableProps = {
   setOpen: (open: boolean) => void;
@@ -69,12 +71,6 @@ export function IncomeTable({
               >
 
               </th>
-              <th
-                scope="col"
-                className="py-3.5 pl-3 pr-4 text-left text-sm font-semibold text-gray-900 sm:pr-0"
-              >
-
-              </th>
             </tr>
           </thead>
           <tbody>
@@ -104,11 +100,8 @@ export function IncomeTable({
                   <td className="py-5 pl-3 pr-4 text-left text-sm text-gray-500 sm:pr-0">
                     {currencyFormatter.format(record.amount)}
                   </td>
-                  <td>
-                    <PencilSquareIcon className="h-3 w-3 text-black" />
-                  </td>
-                  <td>
-                    <TrashIcon className="h-3 w-3 text-red" />
+                  <td className="py-5 pl-3 pr-4">
+                    <EditAndDeleteCell deleteAction={deleteIncomeAction} id={record.id} />
                   </td>
                 </tr>
               ))
