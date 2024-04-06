@@ -30,7 +30,7 @@ const frequencies: Frequency[] = [
 const tiers: Tier[] = [
   {
     name: 'FREE',
-    id: 'free',
+    id: 'FREE',
     price: { monthly: '$0', annually: '$0' },
     description: 'Get started with HustleHub!',
     features: [
@@ -44,7 +44,7 @@ const tiers: Tier[] = [
   },
   {
     name: 'PRO',
-    id: 'pro',
+    id: 'PRO',
     price: { monthly: '$5', annually: '$50' },
     description: 'For the serious builder.',
     features: [
@@ -58,7 +58,7 @@ const tiers: Tier[] = [
   },
   {
     name: 'ELITE',
-    id: 'elite',
+    id: 'ELITE',
     price: { monthly: '$20', annually: '$200' },
     description: 'Perfect for small teams.',
     features: [
@@ -87,27 +87,66 @@ export default function Pricing() {
   const [frequency, setFrequency] = useState(frequencies[0]);
   const session = useSession();
 
+  // const handleCreateCheckoutSessio = async (plan: Tier) => {
+  //   const productId = getPriceId(plan.id, frequency.value);
+  //   const res = await fetch(`/api/stripe/checkout-session`, {
+  //     method: 'POST',
+  //     body: JSON.stringify({productId}),
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //   });
+  //   const checkoutSession = await res.json().then((value) => {
+  //     return value.session;
+  //   });
+  //   const stripe = await getStripe();
+  //   const { error } = await stripe!.redirectToCheckout({
+  //     sessionId: checkoutSession.id,
+  //   });
+  //   // If `redirectToCheckout` fails due to a browser or network
+  //   // error, display the localized error message to your customer
+  //   // using `error.message`.
+  //   console.warn(error.message);
+  // };
+
   const handleCreateCheckoutSession = async (plan: Tier) => {
-    const productId = getPriceId(plan.id, frequency.value);
-    const res = await fetch(`/api/stripe/checkout-session`, {
-      method: 'POST',
-      body: JSON.stringify(productId),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    const checkoutSession = await res.json().then((value) => {
-      return value.session;
-    });
-    const stripe = await getStripe();
-    const { error } = await stripe!.redirectToCheckout({
-      sessionId: checkoutSession.id,
-    });
-    // If `redirectToCheckout` fails due to a browser or network
-    // error, display the localized error message to your customer
-    // using `error.message`.
+  // Assuming `getPriceId` correctly returns the Stripe price ID based on the plan and frequency
+  const productId = getPriceId(plan.id, frequency.value);
+  console.debug('productId:', productId, 'plan:', plan.id, 'frequency:', frequency.value);
+  // Wrap `productId` in an object with a `productId` property
+  const res = await fetch(`/api/stripe/checkout-session`, {
+    method: 'POST',
+    body: JSON.stringify({ productId }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  // Check if the request was successful
+  if (!res.ok) {
+    throw new Error(`HTTP error! status: ${res.status}`);
+  }
+
+  const data = await res.json(); // Parse the JSON response
+  const checkoutSession = data.session; // Access the session object
+
+  // Ensure the session object and its ID are present
+  if (!checkoutSession || !checkoutSession.id) {
+    throw new Error('Invalid session data');
+  }
+
+  // Redirect to Stripe Checkout using the session ID
+  const stripe = await getStripe();
+  const { error } = await stripe!.redirectToCheckout({
+    sessionId: checkoutSession.id,
+  });
+
+  // Handle any errors that occur during the redirect
+  if (error) {
     console.warn(error.message);
-  };
+  }
+};
+
 
   const isSignedIn = !!session.data?.user;
   //const userPlan = session.data?.user?.plan;

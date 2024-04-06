@@ -1,13 +1,26 @@
 import Stripe from "stripe";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { Plan } from "@/lib/constants";
+import { ELITE_MONTHLY_PRICE, ELITE_YEARLY_PRICE, PRO_MONTHLY_PRICE, PRO_YEARLY_PRICE, Plan } from "@/lib/constants";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2023-10-16",
 });
 
 const webhookSecret: string = process.env.STRIPE_WEBHOOK_SECRET!;
+
+const mapPriceIdToPlan = (priceId: string) => {
+  switch (priceId) {
+    case PRO_MONTHLY_PRICE:
+    case PRO_YEARLY_PRICE:
+      return Plan.PRO;
+    case ELITE_MONTHLY_PRICE:
+    case ELITE_YEARLY_PRICE:
+      return Plan.ELITE;
+    default:
+      return Plan.FREE;
+  }
+};
 
 const webhookHandler = async (req: NextRequest) => {
   try {
@@ -37,6 +50,10 @@ const webhookHandler = async (req: NextRequest) => {
 
     const subscription = event.data.object as Stripe.Subscription;
 
+        // Assuming the price ID is in the first item of the subscription's items.
+    const priceId = subscription.items.data[0].price.id;
+    const plan = mapPriceIdToPlan(priceId);
+
     switch (event.type) {
       case "customer.subscription.created":
         await db.user.update({
@@ -46,7 +63,7 @@ const webhookHandler = async (req: NextRequest) => {
           },
           // Update that customer plan
           data: {
-            plan: Plan.PRO,
+            plan
           },
         });
         break;
