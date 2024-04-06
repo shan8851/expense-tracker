@@ -29,7 +29,7 @@ export const AUTH_OPTIONS: NextAuthOptions = {
           ...session.user,
           id: user.id,
           stripeCustomerId: user.stripeCustomerId,
-          isActive: user.isActive,
+          plan: user.plan,
         };
       }
       return session;

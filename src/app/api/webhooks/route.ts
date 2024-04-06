@@ -1,6 +1,7 @@
 import Stripe from "stripe";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
+import { Plan } from "@/lib/constants";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2023-10-16",
@@ -32,7 +33,7 @@ const webhookHandler = async (req: NextRequest) => {
         { status: 400 }
       );
     }
-    console.log("✅ Success:", event.id);
+    console.log("✅ Success:", event);
 
     const subscription = event.data.object as Stripe.Subscription;
 
@@ -45,7 +46,7 @@ const webhookHandler = async (req: NextRequest) => {
           },
           // Update that customer plan
           data: {
-            isActive: true,
+            plan: Plan.PRO,
           },
         });
         break;
@@ -57,7 +58,7 @@ const webhookHandler = async (req: NextRequest) => {
           },
           // Update that customer so their status is now active
           data: {
-            isActive: false,
+            plan: Plan.FREE,
           },
         });
         break;

@@ -9,7 +9,7 @@ import {
   ELITE_YEARLY_PRICE,
   PRO_MONTHLY_PRICE,
   PRO_YEARLY_PRICE,
-  Plans,
+  Plan,
 } from '@/lib/constants';
 import getStripe from '@/utils/getStripe';
 
@@ -73,9 +73,9 @@ const tiers: Tier[] = [
 ];
 
 const getPriceId = (planId: string, frequencyValue: string) => {
-  if (planId === Plans.PRO) {
+  if (planId === Plan.PRO) {
     return frequencyValue === 'yearly' ? PRO_YEARLY_PRICE : PRO_MONTHLY_PRICE;
-  } else if (planId === Plans.ELITE) {
+  } else if (planId === Plan.ELITE) {
     return frequencyValue === 'yearly'
       ? ELITE_YEARLY_PRICE
       : ELITE_MONTHLY_PRICE;

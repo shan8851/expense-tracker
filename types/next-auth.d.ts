@@ -1,9 +1,10 @@
+import { Plan } from '@/lib/constants';
 import 'next-auth';
 declare module 'next-auth' {
   interface User {
     id: string;
     stripeCustomerId: string;
-    isActive: boolean;
+    plan: Plan;
   }
 
   /**

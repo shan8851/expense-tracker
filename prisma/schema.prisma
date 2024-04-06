@@ -8,6 +8,13 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
+enum Plan {
+  FREE
+  PRO
+  ELITE
+}
+
+
 model Account {
   id                 String  @id @default(cuid())
   userId             String
@@ -26,7 +33,6 @@ model Account {
 
   @@unique([provider, providerAccountId])
 }
-
 model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique
@@ -50,7 +56,7 @@ model User {
   emailVerified DateTime?
   image         String?
   stripeCustomerId String?   @unique
-  isActive         Boolean   @default(false)
+  plan          Plan      @default(FREE)
   accounts      Account[]
   sessions      Session[]
   projects      Project[]

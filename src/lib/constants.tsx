@@ -3,8 +3,8 @@ export const PRO_MONTHLY_PRICE = 'price_1P2KhPRxQGx7F40vXgXfgQez'
 export const ELITE_YEARLY_PRICE = 'price_1P2KkzRxQGx7F40vMzuF1Cl3'
 export const ELITE_MONTHLY_PRICE = 'price_1P2KkzRxQGx7F40vRk7cnjQt'
 
-export enum Plans {
-  PRO = 'pro',
-  ELITE = 'elite',
-  FREE = 'free',
+export enum Plan {
+  FREE = 'FREE',
+  PRO = 'PRO',
+  ELITE = 'ELITE',
 }
