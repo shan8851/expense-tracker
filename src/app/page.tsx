@@ -1,6 +1,6 @@
-import Hero from '@/components/shell/hero';
+import {Hero} from '@/components/shell/hero';
 import { Plans } from '@/components/shell/plans';
-import Pricing from '@/components/shell/pricing';
+import {Pricing} from '@/components/shell/pricing';
 
 export default async function Home() {
   return (

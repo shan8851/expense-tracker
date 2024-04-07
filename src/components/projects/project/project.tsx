@@ -97,7 +97,7 @@ export async function Project({ project }: ProjectProps) {
   const dollarsPerHour =
     totalHoursWorked > 0 ? profitLoss / totalHoursWorked : 0;
   return (
-    <div className="flex flex-col gap-8 max-w-4xl mx-auto">
+    <div className="flex flex-col gap-8 max-w-4xl mx-auto mt-8">
       <div className="px-4 sm:px-0 flex flex-col gap-2">
         <div className="flex gap-4 items-center justify-between">
           <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
