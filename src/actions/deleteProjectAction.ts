@@ -23,7 +23,7 @@ const session = await getServerSession(AUTH_OPTIONS);
     await db.project.delete({
       where: { id },
     });
-    revalidatePath('/dashboard');
+    revalidatePath('/projects/[projectId]');
     return { error: null };
   } catch (error: any) {
     console.error('Error deleting project:', error);

@@ -24,7 +24,7 @@ export const deleteTimeAction = async (id: string) => {
     await db.timeLog.delete({
       where: { id },
     });
-    revalidatePath('/dashboard');
+    revalidatePath('/projects/[projectId]');
     return { error: null };
   } catch (error: any) {
     console.error('Error deleting project time log:', error);

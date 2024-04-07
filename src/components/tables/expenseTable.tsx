@@ -1,24 +1,23 @@
 'use client';
 import { currencyFormatter } from '@/utils/utils';
-import { Expense } from '@prisma/client';
 import { deleteExpenseAction } from '@/actions/deleteExpenseAction';
 import { TrashIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { ConfirmDeleteModal } from '../modals/confirmDeleteModal';
 import { AddOrEditExpenseModal } from '../modals/addOrEditExpenseModal';
+import { Expense } from '@prisma/client';
+import { useVisibleItems } from '@/hooks/useVisibleItems';
 
 type ProjectExpenseTableProps = {
   projectName: string;
   expenseRecords: Expense[];
-  expenseTotal: number;
   projectId: string;
 };
 
 export function ExpenseTable({
   projectName,
   expenseRecords,
-  expenseTotal,
   projectId,
 }: ProjectExpenseTableProps) {
   const [addOrEditModalOpen, setAddOrEditModalOpen] = useState(false);
@@ -27,6 +26,7 @@ export function ExpenseTable({
   const [deleteId, setDeleteId] = useState('');
   const [selectedExpenseRecord, setSelectedExpenseRecord] =
     useState<Expense | null>(null);
+    const { visibleItems, showMoreItems, showLessItems, canShowMore, canShowLess } = useVisibleItems<Expense>(expenseRecords);
 
   const handleOpenModal = (expenseRecord?: Expense) => {
     setSelectedExpenseRecord(expenseRecord || null);
@@ -138,6 +138,24 @@ export function ExpenseTable({
                     ))}
                   </tbody>
                 </table>
+                <div className="flex items-center justify-end gap-4 px-4 py-2">
+                {canShowMore && (
+                  <button
+                    onClick={showMoreItems}
+                    className="mt-2 flex items-center gap-1 font-semibold text-gray-900 text-[10px] hover:text-gray-500"
+                  >
+                      SHOW MORE
+                  </button>
+                )}
+                {canShowLess && (
+                  <button
+                    onClick={showLessItems}
+                    className="mt-2 flex items-center gap-1 font-semibold text-gray-900 text-[10px] hover:text-gray-500"
+                  >
+                      SHOW LESS
+                  </button>
+                )}
+              </div>
               </div>
             </div>
           </div>

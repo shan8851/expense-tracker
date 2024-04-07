@@ -18,7 +18,6 @@ async function getProject(projectID?:string) {
 }
 
 export default async function ProjectsPage({ params }: { params: { projectID: string } }) {
-  console.log(params)
   const session = await getServerSession(AUTH_OPTIONS);
   const project = await getProject(params.projectID);
   if (!session || !session.user) {

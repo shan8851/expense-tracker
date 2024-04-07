@@ -21,7 +21,7 @@ async function generateCustomerPortalLink(customerId: string | null) {
     });
     return portalSession.url;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return undefined;
   }
 }

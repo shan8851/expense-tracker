@@ -26,7 +26,7 @@ export const logTimeAction = async (formData: FormData) => {
         }
       },
     });
-    revalidatePath("/dashboard");
+    revalidatePath("/projects/[projectId]");
     return { error: null };
   } catch (error:any) {
     return {

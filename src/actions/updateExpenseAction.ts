@@ -36,7 +36,7 @@ export const updateExpenseAction = async (formData: FormData) => {
         date: new Date(date),
       },
     });
-    revalidatePath('/dashboard');
+    revalidatePath('/projects/[projectId]');
     return { error: null };
   } catch (error: any) {
     console.error('Error updating project expense:', error);

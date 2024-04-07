@@ -30,7 +30,7 @@ export const updateProjectAction = async (formData: FormData) => {
         description,
       },
     });
-    revalidatePath("/dashboard");
+    revalidatePath("/projects/[projectId]");
     return { error: null };
   } catch (error:any) {
     return {

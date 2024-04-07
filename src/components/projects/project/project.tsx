@@ -1,9 +1,9 @@
-import { Project as ProjectType } from '@prisma/client';
 import { Income } from './projectIncome';
 import { db } from '@/lib/db';
 import { Expense } from './projectExpense';
 import { ProjectTimeLog } from './projectTimeLog';
 import { ProjectStats } from './projectStats';
+import { Project as ProjectType } from '@prisma/client';
 
 type ProjectProps = {
   project: ProjectType;
@@ -125,13 +125,11 @@ export async function Project({ project }: ProjectProps) {
       <Income
         projectName={project.name}
         incomeRecords={incomeRecords}
-        incomeTotal={incomeTotal}
         projectId={project.id}
       />
       <Expense
         projectName={project.name}
         expenseRecords={expenseRecords}
-        expenseTotal={expenseTotal}
         projectId={project.id}
       />
       <ProjectTimeLog

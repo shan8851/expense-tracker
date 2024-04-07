@@ -24,7 +24,7 @@ export const deleteExpenseAction = async (id: string) => {
     await db.expense.delete({
       where: { id },
     });
-    revalidatePath('/dashboard');
+    revalidatePath('/projects/[projectId]');
     return { error: null };
   } catch (error: any) {
     console.error('Error deleting project expense:', error);

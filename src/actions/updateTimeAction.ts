@@ -33,7 +33,7 @@ export const updateTimeAction = async (formData: FormData) => {
         note,
       },
     });
-    revalidatePath("/dashboard");
+    revalidatePath("/projects/[projectId]");
     return { error: null };
   } catch (error:any) {
     return {

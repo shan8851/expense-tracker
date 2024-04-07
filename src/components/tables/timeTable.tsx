@@ -1,11 +1,12 @@
 'use client';
-import { TimeLog } from '@prisma/client';
 import { TrashIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
 import { deleteTimeAction } from '@/actions/deleteTimeAction';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { ConfirmDeleteModal } from '../modals/confirmDeleteModal';
 import { AddOrEditTimeModal } from '../modals/logProjectTimeModal';
+import { TimeLog } from '@prisma/client';
+import { useVisibleItems } from '@/hooks/useVisibleItems';
 
 type ProjectIncomeTableProps = {
   projectName: string;
@@ -23,6 +24,7 @@ export function TimeLogTable({
   const [isDeleting, setIsDeleting] = useState(false);
   const [deleteId, setDeleteId] = useState('');
   const [selectedTimeLog, setSelectedTimeLog] = useState<TimeLog | null>(null);
+    const { visibleItems, showMoreItems, showLessItems, canShowMore, canShowLess } = useVisibleItems<TimeLog>(timeRecords);
 
   const handleOpenModal = (timeRecord?: TimeLog) => {
     setSelectedTimeLog(timeRecord || null);
@@ -129,6 +131,24 @@ export function TimeLogTable({
                     ))}
                   </tbody>
                 </table>
+                <div className="flex items-center justify-end gap-4 px-4 py-2">
+                {canShowMore && (
+                  <button
+                    onClick={showMoreItems}
+                    className="mt-2 flex items-center gap-1 font-semibold text-gray-900 text-[10px] hover:text-gray-500"
+                  >
+                      SHOW MORE
+                  </button>
+                )}
+                {canShowLess && (
+                  <button
+                    onClick={showLessItems}
+                    className="mt-2 flex items-center gap-1 font-semibold text-gray-900 text-[10px] hover:text-gray-500"
+                  >
+                      SHOW LESS
+                  </button>
+                )}
+              </div>
               </div>
             </div>
           </div>

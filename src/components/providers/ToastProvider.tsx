@@ -12,7 +12,7 @@ export default function ToastProvider({ children }: ToastProviderProps) {
     <>
       {children}
       <Toaster
-        position="bottom-right"
+        position="top-right"
       />
     </>
   );
