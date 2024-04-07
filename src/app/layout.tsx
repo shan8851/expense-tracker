@@ -7,6 +7,7 @@ import { AUTH_OPTIONS } from './api/auth/[...nextauth]/options';
 import { Nav } from '@/components/shell/nav';
 import { Footer } from '@/components/shell/footer';
 import ToastProvider from '@/components/providers/ToastProvider';
+import TawkToProvider from '@/components/providers/TawkProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -25,12 +26,14 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`flex flex-col min-h-screen ${inter.className}`}>
         <SessionProvider session={session}>
-          <ToastProvider>
+          <TawkToProvider>
+            <ToastProvider>
             <main className="flex-1">
               <Nav />
               {children}
             </main>
           </ToastProvider>
+          </TawkToProvider>
           <Footer />
         </SessionProvider>
       </body>
