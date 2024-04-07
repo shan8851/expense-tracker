@@ -7,7 +7,7 @@ export async function Nav() {
   const session = await getServerSession(AUTH_OPTIONS);
   return (
     <div className="bg-black flex items-center justify-between p-4">
-      <Link href="/" className="font-extrabold text-3xl text-white">
+      <Link href="/" className="font-extrabold text-3xl text-white hover:text-gray-300">
         HustleHub
       </Link>
       <div className="flex items-center gap-4">
@@ -16,13 +16,13 @@ export async function Nav() {
 
             <Link
               href="/projects"
-              className="text-white text-xs p-1 hover:bg-gray-600"
+              className="text-white text-xs p-1 hover:text-gray-300"
             >
               Projects
             </Link>
             <Link
               href="/settings"
-              className="text-white text-xs p-1 hover:bg-gray-600"
+              className="text-white text-xs p-1 hover:text-gray-300"
             >
               Settings
             </Link>

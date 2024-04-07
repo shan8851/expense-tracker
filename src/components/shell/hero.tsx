@@ -10,7 +10,7 @@ export function Hero() {
         <p className="mt-6 text-lg leading-8 text-gray-400">
           The best way to streamline the way you manage your side projects. From
           tracking expenses and logging work hours to managing income and
-          collaborating with team members, we&apos;ve got everything covered.
+          much more, we&apos;ve got everything covered.
         </p>
         <div className="mt-10 flex items-center justify-center gap-x-6">
           <a
@@ -19,7 +19,7 @@ export function Hero() {
           >
             Get Started
           </a>
-          <a href="#pricing" className="text-sm font-semibold leading-6 text-white">
+          <a href="#pricing" className="text-sm font-semibold leading-6 text-white hover:text-gray-200">
             view pricing <span aria-hidden="true">→</span>
           </a>
         </div>

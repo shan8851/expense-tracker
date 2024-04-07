@@ -130,10 +130,10 @@ export function Pricing() {
   //const userPlan = session.data?.user?.plan;
 
   return (
-    <div id="pricing" className="py-24 sm:py-32">
+    <div id="pricing" className="py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-4xl text-center">
-          <p className="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+          <p className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
             Pricing for everyone
           </p>
         </div>
