@@ -32,7 +32,7 @@ const tiers: Tier[] = [
     name: 'FREE',
     id: 'FREE',
     price: { monthly: '$0', yearly: '$0' },
-    description: 'Get started with HustleHub!',
+    description: 'Get started with HustleHub! Track a single project and see what we can do.',
     features: [
       '1 Project',
       'Track Time',
@@ -46,7 +46,7 @@ const tiers: Tier[] = [
     name: 'PRO',
     id: 'PRO',
     price: { monthly: '$5', yearly: '$50' },
-    description: 'For the serious builder.',
+    description: 'Take your side hustles to the next level. Unlock more features!',
     features: [
       '3 Projects',
       'Track Time',
@@ -60,7 +60,7 @@ const tiers: Tier[] = [
     name: 'ELITE',
     id: 'ELITE',
     price: { monthly: '$20', yearly: '$200' },
-    description: 'Perfect for small teams.',
+    description: 'For the serious builder. Get serious about your businesses today!',
     features: [
       'Unlimited Projects',
       'Track Time',
@@ -127,18 +127,19 @@ export function Pricing() {
 
 
   const isSignedIn = !!session.data?.user;
-  //const userPlan = session.data?.user?.plan;
+  const userPlan = session.data?.user?.plan;
 
   return (
     <div id="pricing" className="py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-4xl text-center">
+          <h2 className="text-base font-semibold leading-7 text-emerald-400">Pricing</h2>
           <p className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-            Pricing for everyone
+            Choose the right plan for you
           </p>
         </div>
         <p className="mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-600">
-          Choose the plan that best suits you.
+         We have plans for every stage of your project. Get started for free and upgrade as you grow.
         </p>
         <div className="mt-16 flex justify-center">
           <RadioGroup
@@ -185,7 +186,7 @@ export function Pricing() {
                   {tier.name}
                 </h3>
                 {tier.mostPopular ? (
-                  <p className="rounded-full bg-black/10 px-2.5 py-1 text-xs font-semibold leading-5 text-black">
+                  <p className="rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold leading-5 text-emerald-900">
                     Most popular
                   </p>
                 ) : null}
@@ -193,7 +194,17 @@ export function Pricing() {
               <p className="mt-4 text-sm leading-6 text-gray-600">
                 {tier.description}
               </p>
-              <p className="mt-6 flex items-baseline gap-x-1">
+              {tier.name === 'FREE' ? (
+                <p className="mt-6 flex items-baseline gap-x-1">
+                <span className="text-4xl font-bold tracking-tight text-gray-900">
+                  FREE
+                </span>
+                <span className="text-sm font-semibold leading-6 text-gray-600">
+                  forever
+                </span>
+              </p>
+              ): (
+                <p className="mt-6 flex items-baseline gap-x-1">
                 <span className="text-4xl font-bold tracking-tight text-gray-900">
                   {tier.price[frequency.value]}
                 </span>
@@ -201,16 +212,20 @@ export function Pricing() {
                   {frequency.priceSuffix}
                 </span>
               </p>
+              )}
+
               <button
                 className={classNames(
+                  isSignedIn && userPlan === tier.id || isSignedIn && tier.id === 'FREE' ? 'bg-gray-200 cursor-not-allowed' :
                   tier.mostPopular
-                    ? 'bg-black text-white shadow-sm hover:bg-black'
-                    : 'text-black ring-1 ring-inset ring-black hover:ring-black',
+                    ? 'bg-black text-white shadow-sm hover:bg-gray-700'
+                    : 'text-black border border-black rounded-md hover:bg-black hover:text-white',
                   'mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black'
                 )}
                 onClick={() => handleCreateCheckoutSession(tier)}
+                disabled={isSignedIn && userPlan === tier.id || isSignedIn && tier.id === 'FREE'}
               >
-                Buy plan
+                {isSignedIn && userPlan === tier.id ? `${tier.name} active` : 'Buy Plan'}
               </button>
               <ul
                 role="list"
