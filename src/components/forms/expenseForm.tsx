@@ -4,13 +4,22 @@ import { useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { FormButton } from '../formButton/formButton';
 import { createProjectExpenseAction } from '@/actions/createProjectExpenseAction';
+import { Expense } from '@prisma/client';
+import { updateExpenseAction } from '@/actions/updateExpenseAction';
 
 type ExpenseFormProps = {
   setOpen: (open: boolean) => void;
   projectId: string;
+  expenseRecord: Expense | null;
 };
 
-export function ExpenseForm({ projectId, setOpen }: ExpenseFormProps) {
+export function ExpenseForm({ projectId, setOpen, expenseRecord }: ExpenseFormProps) {
+const [formData, setFormData] = useState({
+    amount: expenseRecord?.amount || '',
+    category: expenseRecord?.category || '',
+    description: expenseRecord?.description || '',
+    date: expenseRecord ? new Date(expenseRecord.date).toISOString().slice(0, 10) : '',
+  });
   const [errors, setErrors] = useState({
     amount: '',
     category: '',
@@ -20,10 +29,11 @@ export function ExpenseForm({ projectId, setOpen }: ExpenseFormProps) {
   const formRef = useRef<HTMLFormElement>(null);
 
   const submitAction = async (formData: FormData) => {
-    const isValid = validateForm(formData);
+    const isValid = validateForm();
     if (!isValid) return;
     formRef.current?.reset();
-    const { error } = await createProjectExpenseAction(formData);
+    const action = expenseRecord ? updateExpenseAction : createProjectExpenseAction;
+    const { error } = await action(formData);
     if (error) {
       toast.error(error);
     } else {
@@ -32,31 +42,37 @@ export function ExpenseForm({ projectId, setOpen }: ExpenseFormProps) {
     setOpen(false);
   };
 
-  const validateForm = (formData: FormData) => {
-    const amount = formData.get('amount') as string;
-    const category = formData.get('category') as string;
-    const date = formData.get('date') as string;
-    const errors = {
-      amount: '',
-      category: '',
-      date: '',
-    };
-    if (!amount) {
-      errors.amount = 'Amount is required';
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = { amount: '', category: '', date: '' };
+
+    if (!formData.amount) {
+      newErrors.amount = 'Amount is required';
+      isValid = false;
     }
-    if (!category) {
-      errors.category = 'Category is required';
+    if (!formData.category) {
+      newErrors.category = 'Category is required';
+      isValid = false;
     }
-    if (!date) {
-      errors.date = 'Date is required';
+    if (!formData.date) {
+      newErrors.date = 'Date is required';
+      isValid = false;
     }
-    setErrors(errors);
-    return !Object.values(errors).some((error) => error);
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: '' }));
   };
 
   return (
     <form action={submitAction} className="flex flex-col gap-4">
       <input type="hidden" name="projectId" value={projectId} />
+      <input type="hidden" name="id" value={expenseRecord?.id} />
       <div>
         <label
           htmlFor="price"
@@ -75,7 +91,8 @@ export function ExpenseForm({ projectId, setOpen }: ExpenseFormProps) {
             className="block w-full rounded-md border-0 py-1.5 pl-7 pr-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             placeholder="0.00"
             aria-describedby="price-currency"
-            onChange={() => setErrors({ ...errors, amount: '' })}
+            onChange={handleChange}
+            value={formData.amount}
           />
           <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
             <span className="text-gray-500 sm:text-sm" id="price-currency">
@@ -101,7 +118,8 @@ export function ExpenseForm({ projectId, setOpen }: ExpenseFormProps) {
             id="category"
             className="px-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             placeholder="AWS Fees"
-            onChange={() => setErrors({ ...errors, category: '' })}
+            onChange={handleChange}
+            value={formData.category}
           />
         </div>
         <div className="h-[20px]">
@@ -121,7 +139,8 @@ export function ExpenseForm({ projectId, setOpen }: ExpenseFormProps) {
             name="description"
             id="description"
             className="px-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-            defaultValue={''}
+            onChange={handleChange}
+            value={formData.description}
           />
         </div>
       </div>
@@ -138,7 +157,8 @@ export function ExpenseForm({ projectId, setOpen }: ExpenseFormProps) {
             name="date"
             id="date"
             className="px-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-            onChange={() => setErrors({ ...errors, date: '' })}
+            onChange={handleChange}
+            value={formData.date}
           />
         </div>
         <div className="h-[20px]">
@@ -146,7 +166,7 @@ export function ExpenseForm({ projectId, setOpen }: ExpenseFormProps) {
         </div>
       </div>
       <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
-        <FormButton text="Add Expense" pendingText='Adding Expense...' />
+        <FormButton text={!expenseRecord ? 'Add Expense' : "Edit"} pendingText={!expenseRecord ? 'Adding...' : "Editing..."} />
         <button
           type="button"
           className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
