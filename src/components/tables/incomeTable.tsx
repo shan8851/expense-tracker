@@ -128,8 +128,8 @@ const handleDelete = async (incomeId: string) => {
                     <td className="py-5 pl-3 pr-4 text-left text-sm text-gray-500 sm:pr-0">
                       {currencyFormatter.format(record.amount)}
                     </td>
-                    <td className="py-5 pl-3 pr-4">
-                      <div className="flex gap-2">
+                    <td className="py-5">
+                      <div className="flex gap-2 justify-end">
                         <PencilSquareIcon
                           onClick={() => handleOpenModal(record)}
                           className="h-4 w-4 text-gray-600 hover:text-gray-400 cursor-pointer"

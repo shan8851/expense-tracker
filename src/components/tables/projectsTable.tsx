@@ -8,7 +8,7 @@ type ProjectsTableProps = {
   projects: Project[];
   setOpen: (open: boolean) => void;
 };
-export default function ProjectsTable({
+export function ProjectsTable({
   projects,
   setOpen,
 }: ProjectsTableProps) {

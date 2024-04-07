@@ -83,7 +83,7 @@ const getPriceId = (planId: string, frequencyValue: string) => {
   // Handle 'FREE'
 };
 
-export default function Pricing() {
+export function Pricing() {
   const [frequency, setFrequency] = useState(frequencies[0]);
   const session = useSession();
 

@@ -10,7 +10,7 @@ type AddOrEditExpenseModalProps = {
   projectId: string;
   expenseRecord: Expense | null;
 };
-export default function AddOrEditExpenseModal({
+export function AddOrEditExpenseModal({
   open,
   setOpen,
   projectId,

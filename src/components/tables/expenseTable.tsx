@@ -1,5 +1,4 @@
 'use client';
-
 import { currencyFormatter } from '@/utils/utils';
 import { Expense } from '@prisma/client';
 import { deleteExpenseAction } from '@/actions/deleteExpenseAction';
@@ -7,7 +6,7 @@ import { TrashIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { ConfirmDeleteModal } from '../modals/confirmDeleteModal';
-import AddOrEditExpenseModal from '../modals/addOrEditExpenseModal';
+import { AddOrEditExpenseModal } from '../modals/addOrEditExpenseModal';
 
 type ProjectExpenseTableProps = {
   projectName: string;
@@ -128,8 +127,8 @@ export function ExpenseTable({
                     <td className="py-5 pl-3 pr-4 text-left text-sm text-gray-500 sm:pr-0">
                       {currencyFormatter.format(record.amount)}
                     </td>
-                    <td className="py-5 pl-3 pr-4">
-                      <div className="flex gap-2">
+                    <td className="py-5">
+                      <div className="flex gap-2 justify-end">
                         <PencilSquareIcon
                           onClick={() => handleOpenModal(record)}
                           className="h-4 w-4 text-gray-600 hover:text-gray-400 cursor-pointer"

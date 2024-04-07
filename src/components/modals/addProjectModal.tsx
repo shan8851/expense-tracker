@@ -7,7 +7,7 @@ type AddProjectModalProps = {
   open: boolean;
   setOpen: (open: boolean) => void;
 };
-export default function AddProjectModal({
+export function AddProjectModal({
   open,
   setOpen,
 }: AddProjectModalProps) {

@@ -5,7 +5,7 @@ type NewProjectShellProps = {
   setOpen: (open: boolean) => void;
 };
 
-export default function NewProjectShell({ setOpen }: NewProjectShellProps) {
+export function NewProjectShell({ setOpen }: NewProjectShellProps) {
   return (
     <div className="text-center">
       <svg
