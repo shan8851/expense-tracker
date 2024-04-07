@@ -6,12 +6,10 @@ import { ProjectForm } from '../forms/projectForm';
 type AddProjectModalProps = {
   open: boolean;
   setOpen: (open: boolean) => void;
-  projectId: string;
 };
 export default function AddProjectModal({
   open,
   setOpen,
-  projectId,
 }: AddProjectModalProps) {
   const cancelButtonRef = useRef(null);
 
@@ -62,7 +60,7 @@ export default function AddProjectModal({
                       Create new project
                     </Dialog.Title>
                     <ProjectForm
-                      projectId={projectId} setOpen={setOpen}
+                       setOpen={setOpen}
                     />
                   </div>
                 </div>

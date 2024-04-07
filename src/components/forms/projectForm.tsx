@@ -7,10 +7,9 @@ import { FormButton } from '../formButton/formButton';
 
 type ProjectFormProps = {
   setOpen: (open: boolean) => void;
-  projectId: string;
 };
 
-export function ProjectForm({ setOpen, projectId }: ProjectFormProps) {
+export function ProjectForm({ setOpen }: ProjectFormProps) {
   const [errors, setErrors] = useState({
     name: '',
   });
@@ -48,7 +47,6 @@ export function ProjectForm({ setOpen, projectId }: ProjectFormProps) {
       action={(formData) => submitAction(formData)}
       className="flex flex-col gap-4"
     >
-      <input type="hidden" name="projectId" value={projectId} />
       <div>
         <label
           htmlFor="name"
