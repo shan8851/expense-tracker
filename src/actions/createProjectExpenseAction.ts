@@ -28,7 +28,7 @@ export const createProjectExpenseAction = async (formData: FormData) => {
         }
       },
     });
-    revalidatePath("/dashboard");
+    revalidatePath('/projects/[projectId]');
     return { error: null };
   } catch (error:any) {
     return {

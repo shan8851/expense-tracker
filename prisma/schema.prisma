@@ -14,6 +14,11 @@ enum Plan {
   ELITE
 }
 
+enum RecurrenceFrequency {
+  NONE
+  MONTHLY
+  ANNUALLY
+}
 
 model Account {
   id                 String  @id @default(cuid())
@@ -72,9 +77,8 @@ model Project {
   expenses    Expense[]
   timeLogs    TimeLog[]
   incomes     ProjectIncome[]
-
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
+  hasRecurringPayments Boolean @default(false)
   @@index([userId], name: "userProjectsIndex")
 }
 
@@ -83,19 +87,19 @@ model Expense {
   projectId   String
   amount      Float
   date        DateTime
-  category    String   // Consider a Category model if you need more structured category management
+  category    String
   description String?
-
+  recurring    RecurrenceFrequency @default(NONE)
+  nextPaymentDue DateTime?
   project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
 
 model TimeLog {
   id        String   @id @default(cuid())
   projectId String
-  hours     Float    // Consider storing in minutes or seconds for more granularity
+  hours     Float
   date      DateTime
   note      String?
-
   project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
 
@@ -104,8 +108,9 @@ model ProjectIncome {
   projectId   String
   amount      Float
   date        DateTime
-  source      String   // Description of the income source, e.g., "Client payment", "Product sales"
+  source      String
   description String?
-
+  recurring    RecurrenceFrequency @default(NONE)
+  nextPaymentDue DateTime?
   project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
