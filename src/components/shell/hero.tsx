@@ -19,7 +19,7 @@ export function Hero() {
           >
             Get Started
           </a>
-          <a href="#" className="text-sm font-semibold leading-6 text-white">
+          <a href="#pricing" className="text-sm font-semibold leading-6 text-white">
             view pricing <span aria-hidden="true">→</span>
           </a>
         </div>

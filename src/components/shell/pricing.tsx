@@ -31,7 +31,7 @@ const tiers: Tier[] = [
   {
     name: 'FREE',
     id: 'FREE',
-    price: { monthly: '$0', annually: '$0' },
+    price: { monthly: '$0', yearly: '$0' },
     description: 'Get started with HustleHub!',
     features: [
       '1 Project',
@@ -45,7 +45,7 @@ const tiers: Tier[] = [
   {
     name: 'PRO',
     id: 'PRO',
-    price: { monthly: '$5', annually: '$50' },
+    price: { monthly: '$5', yearly: '$50' },
     description: 'For the serious builder.',
     features: [
       '3 Projects',
@@ -59,7 +59,7 @@ const tiers: Tier[] = [
   {
     name: 'ELITE',
     id: 'ELITE',
-    price: { monthly: '$20', annually: '$200' },
+    price: { monthly: '$20', yearly: '$200' },
     description: 'Perfect for small teams.',
     features: [
       'Unlimited Projects',
@@ -130,7 +130,7 @@ export function Pricing() {
   //const userPlan = session.data?.user?.plan;
 
   return (
-    <div className="py-24 sm:py-32">
+    <div id="pricing" className="py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-4xl text-center">
           <p className="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
