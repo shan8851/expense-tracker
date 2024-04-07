@@ -37,7 +37,7 @@ const [formData, setFormData] = useState({
     if (error) {
       toast.error(error);
     } else {
-      toast.success('Expense added successfully');
+      toast.success(`Expense ${expenseRecord ? 'updated' : 'added'} successfully`);
     }
     setOpen(false);
   };

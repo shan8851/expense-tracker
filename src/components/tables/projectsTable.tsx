@@ -1,32 +1,60 @@
+'use client';
 import { Project } from '@prisma/client';
 import Link from 'next/link';
-import { EditAndDeleteCell } from './editAndDeleteCell';
+import { TrashIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
 import { deleteProjectAction } from '@/actions/deleteProjectAction';
-
+import { useState } from 'react';
+import toast from 'react-hot-toast';
+import { ConfirmDeleteModal } from '../modals/confirmDeleteModal';
+import { AddOrEditProjectModal } from '../modals/addProjectModal';
+import { NewProjectShell } from '../projects/projectList/newProjectShell';
 
 type ProjectsTableProps = {
   projects: Project[];
-  setOpen: (open: boolean) => void;
 };
 export function ProjectsTable({
   projects,
-  setOpen,
 }: ProjectsTableProps) {
+const [addOrEditModalOpen, setAddOrEditModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [deleteId, setDeleteId] = useState('');
+  const [selectedProject, setSelectedProject] =
+    useState<Project | null>(null);
+
+const handleOpenModal = (proj?: Project) => {
+  setSelectedProject(proj || null);
+  setAddOrEditModalOpen(true);
+};
+
+const handleDelete = async (incomeId: string) => {
+  setDeleteId(incomeId);
+  setDeleteModalOpen(true);
+};
+
+  const onDeleteAction = async () => {
+    setIsDeleting(true);
+    await deleteProjectAction(deleteId);
+    setIsDeleting(false);
+    setDeleteModalOpen(false);
+    toast.success(`Project ${deleteId} deleted successfully`);
+  };
+
   return (
-    <div className="px-4 sm:px-6 lg:px-8">
+    <>
+      <div>
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-base font-semibold leading-6 text-gray-900">
             Projects
           </h1>
           <p className="mt-2 text-sm text-gray-700">
-            A list of all the users in your account including their name, title,
-            email and role.
+            Create, update and delete projects. To view more insights and stats for each project click the name.
           </p>
         </div>
         <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
           <button
-            onClick={() => setOpen(true)}
+            onClick={() => handleOpenModal()}
             type="button"
             className="w-fit inline-flex items-center rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-700"
           >
@@ -34,9 +62,13 @@ export function ProjectsTable({
           </button>
         </div>
       </div>
-      <div className="mt-8 flow-root">
-        <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+      {projects.length === 0 && (
+        <NewProjectShell setOpen={() => handleOpenModal()} />
+      )}
+     {projects.length > 0 && (
+       <div className="mt-8 flow-root">
+        <div>
+          <div className="inline-block min-w-full py-2 align-middle">
             <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
               <table className="min-w-full divide-y divide-gray-300">
                 <thead className="bg-gray-200">
@@ -77,7 +109,7 @@ export function ProjectsTable({
                   {projects.map((project) => (
                     <tr key={project.id}>
                       <td className="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 break-words">
-                        <Link href={`projects/${project.id}`}>{project.name}</Link>
+                        <Link className="text-blue-600 hover:underline" href={`projects/${project.id}`}>{project.name}</Link>
                       </td>
                       <td className="px-3 py-4 text-sm text-gray-500 break-words">
                         {project.description ?? '---'}
@@ -88,9 +120,18 @@ export function ProjectsTable({
                       <td className="hidden md:table-cell whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                         {new Date(project.updatedAt).toLocaleDateString()}
                       </td>
-                      <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 flex gap-2 justify-end">
-                        <EditAndDeleteCell id={project.id} deleteAction={deleteProjectAction} />
-                      </td>
+                      <td className="py-4 pr-4">
+                      <div className="flex gap-2 justify-end">
+                        <PencilSquareIcon
+                          onClick={() => handleOpenModal(project)}
+                          className="h-4 w-4 text-gray-600 hover:text-gray-400 cursor-pointer"
+                        />
+                        <TrashIcon
+                          onClick={() => handleDelete(project.id)}
+                          className="h-4 w-4 text-red-600 hover:text-red-400 cursor-pointer"
+                        />
+                      </div>
+                    </td>
                     </tr>
                   ))}
                 </tbody>
@@ -99,6 +140,19 @@ export function ProjectsTable({
           </div>
         </div>
       </div>
+     )}
     </div>
+    <AddOrEditProjectModal
+        open={addOrEditModalOpen}
+        setOpen={setAddOrEditModalOpen}
+        project={selectedProject}
+      />
+      <ConfirmDeleteModal
+        open={deleteModalOpen}
+        setOpen={setDeleteModalOpen}
+        onDelete={onDeleteAction}
+        isLoading={isDeleting}
+      />
+    </>
   );
 }

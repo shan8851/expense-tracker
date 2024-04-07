@@ -1,17 +1,28 @@
 import { Fragment, useRef } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { PlusCircleIcon } from '@heroicons/react/20/solid';
+import { PlusCircleIcon, PencilIcon } from '@heroicons/react/20/solid';
 import { ProjectForm } from '../forms/projectForm';
+import { Project } from '@prisma/client';
 
-type AddProjectModalProps = {
+type AddOrEditProjectModalProps = {
   open: boolean;
   setOpen: (open: boolean) => void;
+  project: Project | null,
 };
-export function AddProjectModal({
+export function AddOrEditProjectModal({
   open,
   setOpen,
-}: AddProjectModalProps) {
+  project,
+}: AddOrEditProjectModalProps) {
   const cancelButtonRef = useRef(null);
+  const isEditing = project !== null;
+  const title = isEditing ? 'Edit Project' : 'Create New Project';
+  const iconBgColorClass = isEditing ? 'bg-blue-100' : 'bg-emerald-100';
+  const icon = !isEditing ? (
+    <PlusCircleIcon className="h-6 w-6 text-emerald-600" aria-hidden="true" />
+  ) : (
+    <PencilIcon className="h-6 w-6 text-blue-600" aria-hidden="true" />
+  );
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -46,21 +57,21 @@ export function AddProjectModal({
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
                 <div>
-                  <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100">
-                    <PlusCircleIcon
-                      className="h-6 w-6 text-emerald-600"
-                      aria-hidden="true"
-                    />
+                   <div
+                    className={`mx-auto flex h-12 w-12 items-center justify-center rounded-full ${iconBgColorClass}`}
+                  >
+                    {icon}
                   </div>
                   <div className="mt-3 text-center sm:mt-5">
                     <Dialog.Title
                       as="h3"
                       className="text-base font-semibold leading-6 text-gray-900"
                     >
-                      Create new project
+                      {title}
                     </Dialog.Title>
                     <ProjectForm
                        setOpen={setOpen}
+                        project={project}
                     />
                   </div>
                 </div>

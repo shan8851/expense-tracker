@@ -37,7 +37,7 @@ export function IncomeForm({ projectId, setOpen, incomeRecord }: IncomeFormProps
     if (error) {
       toast.error(error);
     } else {
-      toast.success(incomeRecord ? 'Income updated successfully' : 'Income added successfully');
+      toast.success(`Income ${incomeRecord ? 'updated' : 'added'} successfully`);
     }
     setOpen(false);
   };

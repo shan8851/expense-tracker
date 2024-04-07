@@ -1,10 +1,10 @@
-export default async function RootLayout({
+export default async function ProjectLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <div className="p-4">
+    <div className="px-4">
       {children}
     </div>
   );

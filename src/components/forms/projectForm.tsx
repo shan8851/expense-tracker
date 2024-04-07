@@ -4,12 +4,19 @@ import { createProjectAction } from '@/actions/createProjectAction';
 import { useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { FormButton } from '../formButton/formButton';
+import { Project } from '@prisma/client';
+import { updateProjectAction } from '@/actions/updateProjectAction';
 
 type ProjectFormProps = {
   setOpen: (open: boolean) => void;
+  project: Project | null;
 };
 
-export function ProjectForm({ setOpen }: ProjectFormProps) {
+export function ProjectForm({ setOpen, project }: ProjectFormProps) {
+  const [formData, setFormData] = useState({
+    name: project?.name || '',
+    description: project?.description || '',
+  });
   const [errors, setErrors] = useState({
     name: '',
   });
@@ -17,28 +24,34 @@ export function ProjectForm({ setOpen }: ProjectFormProps) {
   const formRef = useRef<HTMLFormElement>(null);
 
   const submitAction = async (formData: FormData) => {
-    const isValid = validateForm(formData);
+    const isValid = validateForm();
     if (!isValid) return;
     formRef.current?.reset();
-    const { error } = await createProjectAction(formData);
+    const action = project ? updateProjectAction : createProjectAction;
+    const { error } = await action(formData);
     if (error) {
       toast.error(error);
     } else {
-      toast.success('Project created successfully');
+      toast.success(`Project ${project ? 'updated' : 'created'} successfully`);
     }
     setOpen(false);
   };
 
-  const validateForm = (formData: FormData) => {
-    const name = formData.get('name') as string;
-    const errors = {
-      name: '',
-    };
-    if (!name) {
-      errors.name = 'Name is required';
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = { name: '' };
+    if (!formData.name) {
+      newErrors.name = 'Give your project a name!';
+      isValid = false;
     }
-    setErrors(errors);
-    return !Object.values(errors).some((error) => error);
+    setErrors(newErrors);
+    return isValid;
+  };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: '' }));
   };
 
   return (
@@ -47,6 +60,7 @@ export function ProjectForm({ setOpen }: ProjectFormProps) {
       action={(formData) => submitAction(formData)}
       className="flex flex-col gap-4"
     >
+    <input type="hidden" name="id" value={project?.id} />
       <div>
         <label
           htmlFor="name"
@@ -61,6 +75,8 @@ export function ProjectForm({ setOpen }: ProjectFormProps) {
             id="name"
             className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-700 sm:text-sm sm:leading-6"
             placeholder="HustleHub"
+            onChange={handleChange}
+            value={formData.name}
           />
         </div>
         <div className="h-[20px]">
@@ -80,12 +96,13 @@ export function ProjectForm({ setOpen }: ProjectFormProps) {
             name="description"
             id="description"
             className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-700 sm:text-sm sm:leading-6"
-            defaultValue={''}
+            onChange={handleChange}
+            value={formData.description}
           />
         </div>
       </div>
       <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
-        <FormButton text="Create Project" pendingText="Creating Project..." />
+        <FormButton text={!project ? 'Create Project' : "Edit Project"} pendingText={!project ? 'Creating...' : "Editing..."} />
         <button
           type="button"
           className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"

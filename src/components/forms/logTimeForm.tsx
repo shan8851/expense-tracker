@@ -34,7 +34,7 @@ const [formData, setFormData] = useState({
     if (error) {
       toast.error(error);
     } else {
-      toast.success('Time logged successfully');
+      toast.success(`Time ${timeRecord ? 'updated' : 'logged'} successfully`);
     }
     setOpen(false);
   };

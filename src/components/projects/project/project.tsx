@@ -113,6 +113,7 @@ export async function Project({ project }: ProjectProps) {
           </div>
         </div>
         <h3 className="font-semibold text-gray-900 text-5xl">{project.name}</h3>
+        <p className="text-gray-600 text-sm">{project.description}</p>
       </div>
       <ProjectStats
         totalIncome={incomeTotal}
@@ -121,27 +122,6 @@ export async function Project({ project }: ProjectProps) {
         profit={profitLoss}
         hourlyRate={dollarsPerHour}
       />
-      <h4 className="text-gray-900 text-lg font-semibold">Details</h4>
-      <div className="border-t border-gray-100">
-        <dl className="divide-y divide-gray-100">
-          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt className="text-sm font-medium leading-6 text-gray-900">
-              Name
-            </dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-              {project.name}
-            </dd>
-          </div>
-          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt className="text-sm font-medium leading-6 text-gray-900">
-              Description
-            </dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-              {project.description}
-            </dd>
-          </div>
-        </dl>
-      </div>
       <Income
         projectName={project.name}
         incomeRecords={incomeRecords}

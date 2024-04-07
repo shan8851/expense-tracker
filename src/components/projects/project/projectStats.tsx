@@ -21,7 +21,7 @@ export function ProjectStats({
 
   return (
     <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
-      <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
+      <div className="overflow-hidden rounded-lg bg-gray-100 px-4 py-5 shadow sm:p-6">
         <dt className="truncate text-sm font-medium text-gray-500">
           Total Income
         </dt>
@@ -29,7 +29,7 @@ export function ProjectStats({
           {currencyFormatter.format(totalIncome)}
         </dd>
       </div>
-      <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
+      <div className="overflow-hidden rounded-lg bg-gray-100 px-4 py-5 shadow sm:p-6">
         <dt className="truncate text-sm font-medium text-gray-500">
           Total Expenses
         </dt>
@@ -37,7 +37,7 @@ export function ProjectStats({
           {currencyFormatter.format(totalExpenses)}
         </dd>
       </div>
-      <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
+      <div className="overflow-hidden rounded-lg bg-gray-100 px-4 py-5 shadow sm:p-6">
         <dt className="truncate text-sm font-medium text-gray-500">
           Hours Worked
         </dt>
@@ -45,13 +45,13 @@ export function ProjectStats({
           {hoursWorked}
         </dd>
       </div>
-      <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
+      <div className="overflow-hidden rounded-lg bg-gray-100 px-4 py-5 shadow sm:p-6">
         <dt className="truncate text-sm font-medium text-gray-500">Profit</dt>
         <dd className={`mt-1 text-3xl font-semibold tracking-tight ${getColorClass(profit)}`}>
           {currencyFormatter.format(profit)}
         </dd>
       </div>
-      <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
+      <div className="overflow-hidden rounded-lg bg-gray-100 px-4 py-5 shadow sm:p-6">
         <dt className="truncate text-sm font-medium text-gray-500">
           Hourly Rate
         </dt>
