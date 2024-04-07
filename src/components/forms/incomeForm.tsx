@@ -14,7 +14,6 @@ type IncomeFormProps = {
 };
 
 export function IncomeForm({ projectId, setOpen, incomeRecord }: IncomeFormProps) {
-  console.log('incomeRecord', incomeRecord);
   const [formData, setFormData] = useState({
     amount: incomeRecord?.amount || '',
     source: incomeRecord?.source || '',

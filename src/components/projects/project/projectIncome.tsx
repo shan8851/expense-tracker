@@ -13,17 +13,11 @@ export const Income = ({
   projectName,
   incomeTotal,
   projectId,
-}: IncomeProps) => {
-  return (
-    <div className="flex flex-col gap-4">
-      <div className="flex flex-col gap-1">
-        <IncomeTable
-          incomeRecords={incomeRecords}
-          projectName={projectName}
-          incomeTotal={incomeTotal}
-          projectId={projectId}
-        />
-      </div>
-    </div>
-  );
-};
+}: IncomeProps) => (
+  <IncomeTable
+    incomeRecords={incomeRecords}
+    projectName={projectName}
+    incomeTotal={incomeTotal}
+    projectId={projectId}
+  />
+);
