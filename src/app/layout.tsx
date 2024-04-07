@@ -7,7 +7,7 @@ import { AUTH_OPTIONS } from './api/auth/[...nextauth]/options';
 import { Nav } from '@/components/shell/nav';
 import { Footer } from '@/components/shell/footer';
 import ToastProvider from '@/components/providers/ToastProvider';
-import TawkToProvider from '@/components/providers/TawkProvider';
+import Script from 'next/script';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -24,16 +24,18 @@ export default async function RootLayout({
   const session = await getServerSession(AUTH_OPTIONS);
   return (
     <html lang="en">
+    <Script
+        src="https://embed.tawk.to/6612a00f1ec1082f04dfbad2/1hqsc2fo0"
+        strategy="lazyOnload"
+      />
       <body className={`flex flex-col min-h-screen ${inter.className}`}>
         <SessionProvider session={session}>
-          <TawkToProvider>
             <ToastProvider>
             <main className="flex-1">
               <Nav />
               {children}
             </main>
           </ToastProvider>
-          </TawkToProvider>
           <Footer />
         </SessionProvider>
       </body>

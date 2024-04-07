@@ -216,14 +216,14 @@ export function Pricing() {
 
               <button
                 className={classNames(
-                  isSignedIn && userPlan === tier.id || isSignedIn && tier.id === 'FREE' ? 'bg-gray-200 cursor-not-allowed' :
+                  isSignedIn && userPlan === tier.id || isSignedIn && tier.id === 'FREE' || userPlan === 'ELITE' ? 'bg-gray-200 cursor-not-allowed' :
                   tier.mostPopular
                     ? 'bg-black text-white shadow-sm hover:bg-gray-700'
                     : 'text-black border border-black rounded-md hover:bg-black hover:text-white',
                   'mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black'
                 )}
                 onClick={() => handleCreateCheckoutSession(tier)}
-                disabled={isSignedIn && userPlan === tier.id || isSignedIn && tier.id === 'FREE'}
+                disabled={isSignedIn && userPlan === tier.id || isSignedIn && tier.id === 'FREE' || userPlan === 'ELITE'}
               >
                 {isSignedIn && userPlan === tier.id ? `${tier.name} active` : 'Buy Plan'}
               </button>
